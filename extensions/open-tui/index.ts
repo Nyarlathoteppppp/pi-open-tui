@@ -178,7 +178,8 @@ export default function (pi: ExtensionAPI) {
 	const scheduleGitRefresh = async (ctx: ExtensionContext) => {
 		if (!sessionLifecycle.isCurrent()) return;
 		const segs = config.footerSegments;
-		if (!segs.gitBranch && !segs.gitStatus && !segs.gitCommit) {
+		// gitCommit only appends a tag to the gitBranch segment, so it never needs git on its own.
+		if (!segs.gitBranch && !segs.gitStatus) {
 			state.git = emptyGitStatus();
 			requestFooterRender?.();
 			return;
@@ -186,8 +187,8 @@ export default function (pi: ExtensionAPI) {
 		const generation = sessionLifecycle.currentGeneration();
 		const cwd = ctx.cwd;
 		const git = await readGitStatus(cwd, {
-			readCommit: true,
-			readTag: segs.gitCommit,
+			readCommit: segs.gitBranch,
+			readTag: segs.gitBranch && segs.gitCommit,
 			readCounts: segs.gitStatus,
 		});
 		if (!sessionLifecycle.isCurrent(generation)) return;
@@ -399,7 +400,7 @@ export default function (pi: ExtensionAPI) {
 			if (lastCtx) {
 				pendingUiChange = getPendingUiChange(newConfig.enabled, active);
 			}
-			const gitNeeded = newConfig.footerSegments.gitBranch || newConfig.footerSegments.gitStatus || newConfig.footerSegments.gitCommit;
+			const gitNeeded = newConfig.footerSegments.gitBranch || newConfig.footerSegments.gitStatus;
 			if (lastCtx && gitNeeded) {
 				void scheduleGitRefresh(lastCtx);
 			} else {

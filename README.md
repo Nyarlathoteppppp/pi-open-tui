@@ -104,7 +104,7 @@ Key options:
 | `telemetry` | Boolean flags | Enables telemetry and its individual measurements |
 | `thinkingPeek.lines` | `0`, `1`, `2` | Off, one-line, or two-line hidden thinking preview |
 
-`sessionName` appears only when the session has a name. `hostname` shows the short host name (first label of the machine's host name, e.g. `mba` from `mba.example.com`) with a server icon. `gitCommit` shows the short hash and tag in detached HEAD state. Disabling `extensionStatuses` hides the entire extension status line, including MCP status. Each status keeps the colours its extension applied with `ctx.ui.theme.fg()`. A status without colours renders in the muted theme colour.
+`sessionName` appears only when the session has a name. `hostname` shows the short host name (first label of the machine's host name, e.g. `mba` from `mba.example.com`) with a server icon. In detached HEAD state, `gitBranch` shows `HEAD` with the short commit hash; `gitCommit` appends the tag pointing at that commit and only takes effect while `gitBranch` is on. Disabling `extensionStatuses` hides the entire extension status line, including MCP status. Each status keeps the colours its extension applied with `ctx.ui.theme.fg()`. A status without colours renders in the muted theme colour.
 
 With `inlineFooter` enabled, the two normal Footer rows are rendered inside the editor frame to save vertical space. The top border places the Git branch on the left and CWD first in the right-hand group; the session title appears on the left too when `sessionName` is enabled. The Header and extension status rows remain separate; narrow terminals truncate lower-priority Footer data first, keeping the right-hand statistics and the border corner.
 

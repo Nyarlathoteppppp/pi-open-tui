@@ -248,9 +248,9 @@ test("supports localized settings and keyboard shortcuts", async () => {
 
 test("configures inline footer from General settings", async () => {
 	const settings = await openSettings();
-	// Enabled → Language → Thinking peek → Inline footer
+	// Enabled → Language → Thinking peek → Footer in editor border
 	for (let i = 0; i < 3; i++) settings.component.handleInput("\x1b[B");
-	assert.match(selectedLine(settings.component), /Inline footer/);
+	assert.match(selectedLine(settings.component), /Footer in editor border/);
 	settings.component.handleInput(" ");
 	assert.equal(settings.getConfig().inlineFooter, true);
 });
