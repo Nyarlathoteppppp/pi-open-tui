@@ -49,6 +49,8 @@ pi -e npm:pi-open-tui
 
 如果已经安装字体，但 `auto` 仍选择 ASCII，请手动切换为 `nerd`。使用 VS Code、Windows Terminal 等应用时，只在操作系统中安装字体还不够，还需要在对应的终端配置中选中该字体。如果 SSH 客户端终端确实安装了 Nerd Font 并希望在 SSH 下使用完整图标，请将模式显式设为 `nerd`。
 
+如果较宽的 Nerd Font 图标占用了图标与文字之间的间隔（例如在 Kitty 中），可开启 `footerSegments.nerdIconSpacing`（`/open-tui` 中的 **底栏 → Nerd 图标后额外留空**）。开启后底栏会在 Nerd Font 图标后额外预留一格空白，包括运行环境图标，常规底栏和内嵌底栏的宽度计算都包含这格留白；Unicode/ASCII 图标与紧凑的 Git 状态标记不受影响。Kitty 用户也可以在 `kitty.conf` 中设置 `narrow_symbols U+E000-U+F8FF 1`。
+
 ## 配置
 
 运行 `/open-tui` 打开设置窗口，其中包含**常规**、**外观**、**底栏**和**遥测**四个页面。设置保存在 `~/.pi/agent/open-tui.json`：
@@ -74,7 +76,8 @@ pi -e npm:pi-open-tui
     "tokens": true,
     "cost": true,
     "extensionStatuses": true,
-    "capitalizeProviderName": true
+    "capitalizeProviderName": true,
+    "nerdIconSpacing": false
   },
   "telemetry": {
     "enabled": true,
@@ -101,6 +104,7 @@ pi -e npm:pi-open-tui
 | `icons.mode` | `auto`、`nerd`、`unicode`、`ascii` | 控制底栏和遥测通知使用的图标 |
 | `footerSegments` | 布尔开关 | 分别控制底栏中的各项数据 |
 | `footerSegments.capitalizeProviderName` | 布尔开关 | 将底栏中提供商名称的首字母大写；设为 `false` 时保留原始大小写 |
+| `footerSegments.nerdIconSpacing` | 布尔开关 | 在底栏 Nerd Font 图标后额外留一格空白；默认 `false` |
 | `telemetry` | 布尔开关 | 控制遥测总开关和各项指标 |
 | `thinkingPeek.lines` | `0`、`1`、`2` | 关闭、单行或双行思考预览 |
 

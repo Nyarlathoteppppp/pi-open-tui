@@ -22,6 +22,7 @@ export interface FooterSegments {
 	cost: boolean;
 	extensionStatuses: boolean;
 	capitalizeProviderName: boolean;
+	nerdIconSpacing: boolean;
 }
 
 export interface TelemetryConfig {
@@ -72,6 +73,7 @@ export const DEFAULT_CONFIG: OpenTuiConfig = {
 		cost: true,
 		extensionStatuses: true,
 		capitalizeProviderName: true,
+		nerdIconSpacing: false,
 	},
 	telemetry: {
 		enabled: true,

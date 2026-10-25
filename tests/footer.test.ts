@@ -654,12 +654,14 @@ function renderFooterWithSession(opts: {
 	sessionName?: string | null;
 	mode?: "nerd" | "ascii";
 	sessionNameEnabled?: boolean;
+	nerdIconSpacing?: boolean;
 	width?: number;
 }): string {
 	const {
 		sessionName,
 		mode = "ascii",
 		sessionNameEnabled = true,
+		nerdIconSpacing = false,
 		width = 160,
 	} = opts;
 	const name = sessionName === undefined ? "test-session" : sessionName;
@@ -681,6 +683,7 @@ function renderFooterWithSession(opts: {
 	const config = structuredClone(DEFAULT_CONFIG);
 	config.icons.mode = mode;
 	config.footerSegments.sessionName = sessionNameEnabled;
+	config.footerSegments.nerdIconSpacing = nerdIconSpacing;
 	const state: FooterState = {
 		git: emptyGitStatus(),
 		runtime: null,
@@ -729,6 +732,14 @@ test("footer truncates long session names to 24 width units", () => {
 	const clean = out.replace(/\x1b\[[0-9;]*m/g, "");
 	assert.ok(!clean.includes(longName), "full name must not appear\n" + clean);
 	assert.match(clean, /x{10,}\.\.\./, "truncated name should keep a prefix and ellipsis\n" + clean);
+});
+
+test("nerdIconSpacing adds one blank after Nerd icons only", () => {
+	const nerd = resolveGlyphs("nerd").session;
+	// On first, so a mutated shared glyph table would fail the later checks.
+	assert.ok(renderFooterWithSession({ mode: "nerd", sessionName: "s", nerdIconSpacing: true }).includes(`${nerd}  s`));
+	assert.ok(renderFooterWithSession({ mode: "nerd", sessionName: "s" }).includes(`${nerd} s`));
+	assert.ok(renderFooterWithSession({ sessionName: "s", nerdIconSpacing: true }).includes(`${resolveGlyphs("ascii").session} s`));
 });
 
 test("session name uses matching glyph in nerd and ascii modes", () => {

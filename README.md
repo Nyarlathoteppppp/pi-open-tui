@@ -49,6 +49,8 @@ The default `auto` mode checks the terminal environment, not the installed font 
 
 If the font is installed but `auto` still selects ASCII, choose `nerd` explicitly. In VS Code, Windows Terminal, and similar apps, configure the font in the terminal profile rather than only installing it in the operating system. If your SSH client terminal does ship a Nerd Font and you want the full icon set over SSH, set the mode to `nerd` explicitly.
 
+If wide Nerd Font icons visually consume the gap before their labels (for example in Kitty), enable `footerSegments.nerdIconSpacing` (**Footer → Extra space after Nerd icons** in `/open-tui`). The footer then reserves an extra blank cell after Nerd Font icons, including runtime icons, and includes it in regular and inline footer width calculations. Unicode/ASCII icons and compact Git status flags are unchanged. In Kitty, `narrow_symbols U+E000-U+F8FF 1` in `kitty.conf` is an alternative.
+
 ## Configuration
 
 Run `/open-tui` to open the settings dialog. It provides **General**, **Appearance**, **Footer**, and **Telemetry** tabs. Settings are stored in `~/.pi/agent/open-tui.json`:
@@ -74,7 +76,8 @@ Run `/open-tui` to open the settings dialog. It provides **General**, **Appearan
     "tokens": true,
     "cost": true,
     "extensionStatuses": true,
-    "capitalizeProviderName": true
+    "capitalizeProviderName": true,
+    "nerdIconSpacing": false
   },
   "telemetry": {
     "enabled": true,
@@ -101,6 +104,7 @@ Key options:
 | `icons.mode` | `auto`, `nerd`, `unicode`, `ascii` | Controls footer and telemetry icons |
 | `footerSegments` | Boolean flags | Shows or hides individual footer data |
 | `footerSegments.capitalizeProviderName` | Boolean | Capitalizes the first character of the provider name in the footer; set it to `false` to keep the provider's original casing |
+| `footerSegments.nerdIconSpacing` | Boolean | Adds an extra blank cell after Nerd Font icons in the footer; defaults to `false` |
 | `telemetry` | Boolean flags | Enables telemetry and its individual measurements |
 | `thinkingPeek.lines` | `0`, `1`, `2` | Off, one-line, or two-line hidden thinking preview |
 
